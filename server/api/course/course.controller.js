@@ -5,7 +5,7 @@ var Course = require('./course.model');
 
 // Get list of courses in organization
 exports.index = function(req, res) {
-  Course.find({organization: req.user.organization},function (err, courses) {
+  Course.find({organization: req.body.organization},function (err, courses) {
     if(err) { return handleError(res, err); }
     return res.status(200).json(courses);
   });
