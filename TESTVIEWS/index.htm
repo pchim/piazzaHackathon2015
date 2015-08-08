@@ -5,6 +5,7 @@
         <title>study-date</title>
         
         <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 
         <!-- Optional theme -->
@@ -42,7 +43,7 @@
                     </form>
                     
                     <div class="nav navbar-nav navbar-right">
-                        <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">POST+</button>
+                        <button type="button" class="btn btn-default btn-lg" data-toggle="modal" data-target="#myModal">Post <i class="fa fa-plus"></i></button>
                     </div>
                 </div><!-- /.navbar-collapse -->
             </div><!-- /.container-fluid -->
@@ -55,37 +56,59 @@
                 <!-- Modal content-->
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <button type="button" class="close" data-dismiss="modal"><i class="fa fa-times"></i></button>
                         <h4 class="modal-title">Post New Study Session</h4>
                     </div>
                     
                     <div class="modal-body">
-                        <form class="form-horizontal" role="form">
-                            <div class="form-group">
-                                <label class="control-label col-sm-2" for="numberpeople">#People</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="numberpeople" placeholder="#People">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label col-sm-2" for="location">Location</label>
-                                <div class="col-sm-10"> 
-                                    <input type="text" class="form-control" id="location" placeholder="Location">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label col-sm-2" for="time">Time</label>
-                                <div class="col-sm-10"> 
-                                    <input type="text" class="form-control" id="time" placeholder="Time">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label col-sm-2" for="class">Class</label>
-                                <div class="col-sm-10"> 
-                                    <input type="text" class="form-control" id="class" placeholder="#Class">
-                                </div>
-                            </div>
-                        </form>
+                        
+                        <div class="input-group">
+                            <span class="input-group-addon" id="basic-addon1"><i class="fa fa-university"></i></span>
+                            <select class="form-control">
+                                <option value="one">CS101</option>
+                                <option value="two">CS102</option>
+                                <option value="three">CS103</option>
+                                <option value="four">CS104</option>
+                                <option value="five">CS105</option>
+                            </select>
+                        </div>
+
+                        <br>
+                        
+                        <div class="input-group">
+                            <span class="input-group-addon" id="basic-addon1"><i class="fa fa-users"></i></span>
+                            <select class="form-control">
+                                <option value="one">Study Session</option>
+                                <option value="two">Notes</option>
+                                <option value="three">Announcements</option>
+                            </select>
+                        </div>
+                        
+                        <br>
+
+                        <div class="input-group">
+                            <span class="input-group-addon" id="basic-addon1"><i class="fa fa-location-arrow"></i></span>
+                            <input type="text" class="form-control" placeholder="Location" aria-describedby="basic-addon1">
+                        </div>
+
+                        <br>
+                        
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                <div class="input-group">
+                                    <span class="input-group-addon" id="basic-addon1"><i class="fa fa-calendar"></i></span>
+                                    <input type="text" class="form-control" placeholder="Date" aria-describedby="basic-addon1">
+                                </div><!-- /input-group -->
+                            </div><!-- /.col-lg-6 -->
+
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                <div class="input-group">
+                                    <span class="input-group-addon" id="basic-addon1"><i class="fa fa-clock-o"></i></span>
+                                    <input type="text" class="form-control" placeholder="Time" aria-describedby="basic-addon1">
+                                </div><!-- /input-group -->
+                            </div><!-- /.col-lg-6 -->
+                        </div><!-- /.row -->
+                    
                     </div>
                     
                     <div class="modal-footer">
@@ -114,50 +137,59 @@
             </div>
             
             <div class="col-lg-9 col-md-9 col-sm-9">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Panel title</h3>
+                <ul class="nav nav-tabs">
+                    <li class="active"><a data-toggle="tab" href="#home">Study</a></li>
+                    <li><a data-toggle="tab" href="#menu1">Notes</a></li>
+                    <li><a data-toggle="tab" href="#menu2">Announcements</a></li>
+                </ul>
+
+                <div class="tab-content">
+                    <div id="home" class="tab-pane fade in active">
+                        <br>
+                        <div class="panel panel-default">
+                            <!-- Default panel contents -->
+                            <div class="panel-heading">#STUDY<span class="pull-right"><a href="#">edit</a></span></div>
+
+                            <!-- List group -->
+                            <ul class="list-group">
+                                <li class="list-group-item"><i class="fa fa-location-arrow"></i> Location</li>
+                                <li class="list-group-item"><i class="fa fa-calendar"></i> Date</li>
+                                <li class="list-group-item"><i class="fa fa-clock-o"></i> Time</li>
+                            </ul>
+                        </div>
                     </div>
-                    <div class="panel-body">
-                        Panel content
+                    
+                    <div id="menu1" class="tab-pane fade">
+                        <br>
+                        <div class="panel panel-default">
+                            <!-- Default panel contents -->
+                            <div class="panel-heading">#NOTES<span class="pull-right"><a href="#">edit</a></span></div>
+
+                            <!-- List group -->
+                            <ul class="list-group">
+                                <li class="list-group-item"><i class="fa fa-location-arrow"></i> Location</li>
+                                <li class="list-group-item"><i class="fa fa-calendar"></i> Date</li>
+                                <li class="list-group-item"><i class="fa fa-clock-o"></i> Time</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div id="menu2" class="tab-pane fade">
+                        <br>
+                        <div class="panel panel-default">
+                            <!-- Default panel contents -->
+                            <div class="panel-heading">#ANNOUNCEMENTS<span class="pull-right"><a href="#">edit</a></span></div>
+
+                            <!-- List group -->
+                            <ul class="list-group">
+                                <li class="list-group-item"><i class="fa fa-location-arrow"></i> Location</li>
+                                <li class="list-group-item"><i class="fa fa-calendar"></i> Date</li>
+                                <li class="list-group-item"><i class="fa fa-clock-o"></i> Time</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
-                
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Panel title</h3>
-                    </div>
-                    <div class="panel-body">
-                        Panel content
-                    </div>
-                </div>
-                
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Panel title</h3>
-                    </div>
-                    <div class="panel-body">
-                        Panel content
-                    </div>
-                </div>
-                
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Panel title</h3>
-                    </div>
-                    <div class="panel-body">
-                        Panel content
-                    </div>
-                </div>
-                
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Panel title</h3>
-                    </div>
-                    <div class="panel-body">
-                        Panel content
-                    </div>
-                </div>
+
             </div>
         </div>
     </body>
