@@ -106,6 +106,34 @@ angular.module('piazzahackApp')
       session.participants.push($scope.user.name); //will not work with people with same name...?
     }
 
+    $scope.addNote = function(course){
+      $scope.newNote={
+        date: Date.now(),
+        message: $scope.message
+      }
+      course.notes.push(newNote);
+      $http.put('/api/courses/' + course._id +'/notes/', course.notes)
+        .success(function(data){
+          console.log("notes", course.notes);
+        })
+        .error(function(data){
+          console.log('Error: ' + data);
+        });
+        $scope.newNote= {};
+        $scope.message= '';
+    }
+    
+    $scope.deleteNote = function(course, index){
+      course.notes.splice(index,1);
+      $http.put('/api/courses', course.notes)
+        .success(function(data){
+          console.log("sessions", course.notes);
+        })
+        .error(function(data){
+          console.log('Error: ' + data);
+        });
+    }
+
     $scope.deleteParticipant = function(session){
       var index = participants.indexOf($scope.user.name);
       session.participants.splice(index, 1);
