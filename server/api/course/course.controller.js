@@ -90,7 +90,7 @@ exports.create = function(req, res) {
   Course.create(req.body, function(err, course) {
     User.findById(req.body.user_id, function (err, user) {
       user.courses.push(course._id);
-      course.save(function (err) {
+      user.save(function (err) {
         if(err) { return handleError(res, err); }
         return res.status(201).json(course);
       });
