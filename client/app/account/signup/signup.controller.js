@@ -12,7 +12,8 @@ angular.module('piazzahackApp')
         Auth.createUser({
           name: $scope.user.name,
           email: $scope.user.email,
-          password: $scope.user.password
+          password: $scope.user.password,
+          school: $scope.user.school
         })
         .then( function() {
           // Account created, redirect to home
