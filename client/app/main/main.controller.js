@@ -9,7 +9,7 @@ angular.module('piazzahackApp')
       $scope.currentCourse={};
       console.log($scope.user);
 
-      $http.get('/api/courses')
+      $http.get('/api/courses/me', $scope.user._id)
         .success(function(data) {
           $scope.courses = data;
           socket.syncUpdates('course', $scope.courses);
