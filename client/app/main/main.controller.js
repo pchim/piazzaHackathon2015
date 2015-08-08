@@ -7,9 +7,11 @@ angular.module('piazzahackApp')
       $scope.courses = [];
       $scope.user = Auth.getCurrentUser();
       $scope.currentCourse={};
+      $scope.allUsers = [];
+      $scope.users = [];
       console.log($scope.user);
 
-      $http.get('/api/courses/me', $scope.user._id)
+      $http.get('/api/courses/me', {user_id: $scope.user._id})
         .success(function(data) {
           $scope.courses = data;
           socket.syncUpdates('course', $scope.courses);
@@ -17,19 +19,32 @@ angular.module('piazzahackApp')
         .error(function(data){
           console.log('Error:' +data);
         });
-      // $http.get('/api/users')
-      //   .success(function(data) {
-      //     $scope.users = data;
-      //     socket.syncUpdates('user', $scope.users);
-      //   })
-      //   .error(function(data){
-      //     console.log('Error:' +data);
-      //   });
+      $http.get('/api/users')
+        .success(function(data) {
+          $scope.users = data;
+          socket.syncUpdates('user', $scope.users);
+        })
+        .error(function(data){
+          console.log('Error:' +data);
+        });
+
       //Check user's org == course's org
     }
 
     $scope.setCurrentCourse = function(course){
       $scope.currentCourse = course;
+    }
+
+    
+    $scope.getAllUsers = function(){
+      $http.get('/api/users')
+        .success(function(data){
+          $scope.allUsers = data;
+          console.log("users", $scope.allUsers);
+        })
+        .error(function(data){
+          console.log('Error: ' + data);
+        });
     }
 
     $scope.createCourse = function() {
@@ -38,7 +53,6 @@ angular.module('piazzahackApp')
         $http.post('/api/courses', $scope.newCourseData)
         .success(function(data){
           $scope.newCourseData={};
-          $scope.courses.push(data);
           console.log("courses", $scope.courses);
         })
         .error(function(data){
@@ -111,7 +125,14 @@ angular.module('piazzahackApp')
     }
 
     $scope.addParticipant = function(session){
-      session.participants.push($scope.user.name); //will not work with people with same name...?
+      // session.participants.push($scope.user.name); //will not work with people with same name...?
+      $http.post('/api/courses/' + $scope.currentCourse._id +'/sessions/join', {session_id: session._id, user_id: $scope.user._id})
+        .success(function(data){
+          console.log("participants", session.participants);
+        })
+        .error(function(data){
+          console.log('Error: ' + data);
+        });
     }
 
     $scope.addNote = function(course){

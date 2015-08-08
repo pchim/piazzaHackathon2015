@@ -51,6 +51,7 @@ exports.createSession = function(req, res) {
   Course.findById(req.params.id, function (err, course) {
     if(err) { return handleError(res, err); }
     if(!course) { return res.status(404).send('Not Found'); }
+    req.body.date = new Date(req.body.date);
     course.sessions.push(req.body);
     course.save(function(err) {
       if(err) { return handleError(res, err); }
@@ -68,7 +69,7 @@ exports.joinSession = function(req, res) {
       return s._id == req.body.session_id;
     });
     var idx = course.sessions.indexOf(session[0]);
-    course.sessions[idx].participants.push(req.body.user_id);
+    course.sessions[idx].participants.push(req.body.user_name);
     course.save(function(err) {
       if (err) { return handleError(res, err); }
       res.status(200).json(course);
@@ -90,7 +91,7 @@ exports.create = function(req, res) {
   Course.create(req.body, function(err, course) {
     User.findById(req.body.user_id, function (err, user) {
       user.courses.push(course._id);
-      course.save(function (err) {
+      user.save(function (err) {
         if(err) { return handleError(res, err); }
         return res.status(201).json(course);
       });
