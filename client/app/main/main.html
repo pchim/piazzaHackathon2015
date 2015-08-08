@@ -44,12 +44,8 @@
 
                 <div class="input-group">
                     <span class="input-group-addon" id="basic-addon1"><i class="fa fa-university"></i></span>
-                    <select class="form-control">
-                        <option value="one">CS101</option>
-                        <option value="two">CS102</option>
-                        <option value="three">CS103</option>
-                        <option value="four">CS104</option>
-                        <option value="five">CS105</option>
+                    <select class="form-control" ng-repeat="course in courses">
+                        <option value="">{{course.name}}</option>
                     </select>
                 </div>
 
@@ -92,7 +88,7 @@
             </div>
 
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Submit</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="createSession()">Submit</button>
             </div>
         </div>
 
