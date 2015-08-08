@@ -101,6 +101,86 @@
     </div>
 </div>
 
+<!-- Modal -->
+        <div id="editModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><i class="fa fa-times"></i></button>
+                        <h4 class="modal-title">Post New Study Session</h4>
+                    </div>
+                    
+                    <div class="modal-body">
+                        
+                        <div class="input-group">
+                            <span class="input-group-addon" id="basic-addon1"><i class="fa fa-university"></i></span>
+                            <select class="form-control">
+                                <option value="one">CS101</option>
+                                <option value="two">CS102</option>
+                                <option value="three">CS103</option>
+                                <option value="four">CS104</option>
+                                <option value="five">CS105</option>
+                            </select>
+                        </div>
+
+                        <br>
+                        
+                            <div class="row">
+                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                    <div class="input-group">
+                                        <span class="input-group-addon" id="basic-addon1"><i class="fa fa-users"></i></span>
+                                        <select class="form-control">
+                                            <option value="one">Study Session</option>
+                                            <option value="two">Notes</option>
+                                            <option value="three">Announcements</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" placeholder="#People">
+                                    </div>
+                                </div>
+                            </div>
+                        
+                        <br>
+
+                        <div class="input-group">
+                            <span class="input-group-addon" id="basic-addon1"><i class="fa fa-location-arrow"></i></span>
+                            <input type="text" class="form-control" placeholder="Location" aria-describedby="basic-addon1">
+                        </div>
+
+                        <br>
+                        
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                <div class="input-group">
+                                    <span class="input-group-addon" id="basic-addon1"><i class="fa fa-calendar"></i></span>
+                                    <input type="text" class="form-control" placeholder="Date" aria-describedby="basic-addon1">
+                                </div><!-- /input-group -->
+                            </div><!-- /.col-lg-6 -->
+
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                <div class="input-group">
+                                    <span class="input-group-addon" id="basic-addon1"><i class="fa fa-clock-o"></i></span>
+                                    <input type="text" class="form-control" placeholder="Time" aria-describedby="basic-addon1">
+                                </div><!-- /input-group -->
+                            </div><!-- /.col-lg-6 -->
+                        </div><!-- /.row -->
+                    
+                    </div>
+                    
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Submit</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
 <div class="row">
     <div class="col-lg-3 col-md-3 col-sm-3 hash-categories">
       <ul class="list-group">
@@ -126,7 +206,8 @@
                 <br>
                 <div class="panel panel-default" ng-repeat="session in currentCourse.sessions">
                     <!-- Default panel contents -->
-                    <div class="panel-heading">Looking for {{session.participants.length}}/{{session.max_number_people}} people<span class="pull-right"><button type="button" class="btn btn-link" ng-click="addParticipant(session)">join </a>/<button type="button" class="btn btn-link"> edit</button></span></div>
+                    
+                    <div class="panel-heading">Looking for {{session.participants.length}}/{{session.max_number_people}} people<span class="pull-right"><a ng-click="addParticipant(session)" href="#"><i class="fa fa-2x fa-users"></i></a><a href="#" data-toggle="modal" data-target="#editModal"><i class="fa fa-2x fa-pencil-square-o"></i></a></span></div>
 
                     <!-- List group -->
                     <ul class="list-group">
