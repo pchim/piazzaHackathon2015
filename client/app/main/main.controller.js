@@ -110,7 +110,14 @@ angular.module('piazzahackApp')
     }
 
     $scope.addParticipant = function(session){
-      session.participants.push($scope.user.name); //will not work with people with same name...?
+      // session.participants.push($scope.user.name); //will not work with people with same name...?
+      $http.post('/api/courses/' + $scope.currentCourse._id +'/sessions/join', {session_id: session._id, user_id: $scope.user._id})
+        .success(function(data){
+          console.log("participants", session.participants);
+        })
+        .error(function(data){
+          console.log('Error: ' + data);
+        });
     }
 
     $scope.addNote = function(course){
