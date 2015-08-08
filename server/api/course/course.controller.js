@@ -3,11 +3,35 @@
 var _ = require('lodash');
 var Course = require('./course.model');
 
-// Get list of courses
+// Get list of courses in organization
 exports.index = function(req, res) {
-  Course.find(function (err, courses) {
+  Course.find({organization: req.user.organization},function (err, courses) {
     if(err) { return handleError(res, err); }
     return res.status(200).json(courses);
+  });
+};
+
+// Get list of courses the user is in
+exports.userCourses = function(req, res) {
+  var userId = req.user._id;
+  User.findById(userId, function (err, user) {
+    Course.find({_id: {$in: user.courses}}, function (err, courses) {
+      if(err) { return handleError(res, err); }
+      return res.status(200).json(courses);
+    });
+  });
+};
+
+// join a course
+exports.join = function(req, res) {
+  var userId = req.user._id;
+  User.findById(userId, function (err, user) {
+    if(err) { return handleError(res, err); }
+    user.courses.push(req.params.id);
+    user.save(function(err) {
+      if(err) { return handleError(res, err); }
+      res.status(200).json(user);
+    });
   });
 };
 
