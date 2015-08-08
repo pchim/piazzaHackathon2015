@@ -38,7 +38,6 @@ angular.module('piazzahackApp')
         $http.post('/api/courses', $scope.newCourseData)
         .success(function(data){
           $scope.newCourseData={};
-          $scope.courses.push(data);
           console.log("courses", $scope.courses);
         })
         .error(function(data){

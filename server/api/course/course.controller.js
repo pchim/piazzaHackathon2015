@@ -51,6 +51,7 @@ exports.createSession = function(req, res) {
   Course.findById(req.params.id, function (err, course) {
     if(err) { return handleError(res, err); }
     if(!course) { return res.status(404).send('Not Found'); }
+    req.body.date = new Date(req.body.date);
     course.sessions.push(req.body);
     course.save(function(err) {
       if(err) { return handleError(res, err); }
