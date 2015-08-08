@@ -7,6 +7,8 @@ angular.module('piazzahackApp')
       $scope.courses = [];
       $scope.user = Auth.getCurrentUser();
       $scope.currentCourse={};
+      $scope.allUsers = [];
+      $scope.users = [];
       console.log($scope.user);
 
       $http.get('/api/courses/me', {user_id: $scope.user._id})
@@ -17,19 +19,32 @@ angular.module('piazzahackApp')
         .error(function(data){
           console.log('Error:' +data);
         });
-      // $http.get('/api/users')
-      //   .success(function(data) {
-      //     $scope.users = data;
-      //     socket.syncUpdates('user', $scope.users);
-      //   })
-      //   .error(function(data){
-      //     console.log('Error:' +data);
-      //   });
+      $http.get('/api/users')
+        .success(function(data) {
+          $scope.users = data;
+          socket.syncUpdates('user', $scope.users);
+        })
+        .error(function(data){
+          console.log('Error:' +data);
+        });
+
       //Check user's org == course's org
     }
 
     $scope.setCurrentCourse = function(course){
       $scope.currentCourse = course;
+    }
+
+    
+    $scope.getAllUsers = function(){
+      $http.get('/api/users')
+        .success(function(data){
+          $scope.allUsers = data;
+          console.log("users", $scope.allUsers);
+        })
+        .error(function(data){
+          console.log('Error: ' + data);
+        });
     }
 
     $scope.createCourse = function() {

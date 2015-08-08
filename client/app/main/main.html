@@ -110,7 +110,7 @@
           </li>
       </ul>
       <ul class="list-group" ng-repeat="course in courses">
-          <li class="list-group-item"><a ng-click="setCurrentCourse(course)">#{{course.name}}</a></li>
+          <li class="list-group-item"><a ng-click="setCurrentCourse(course)">#{{course.name | uppercase}}</a></li>
       </ul>
     </div>
     
@@ -126,13 +126,16 @@
                 <br>
                 <div class="panel panel-default" ng-repeat="session in currentCourse.sessions">
                     <!-- Default panel contents -->
-                    <div class="panel-heading">Looking for {{session.max_number_people}} people<span class="pull-right"><button type="button" class="btn btn-link" ng-click="addParticipant(session)">join </a>/<button type="button" class="btn btn-link"> edit</button></span></div>
+                    <div class="panel-heading">Looking for {{session.participants.length}}/{{session.max_number_people}} people<span class="pull-right"><button type="button" class="btn btn-link" ng-click="addParticipant(session)">join </a>/<button type="button" class="btn btn-link"> edit</button></span></div>
 
                     <!-- List group -->
                     <ul class="list-group">
                         <li class="list-group-item"><i class="fa fa-location-arrow"></i> Location: {{session.location}}</li>
                         <li class="list-group-item"><i class="fa fa-calendar"></i> Date: {{session.date | date:'short'}}</li>
-                        <li class="list-group-item"><i class="fa fa-users"></i>Participants: {{session.participants}}</li>
+                        <li class="list-group-item"><i class="fa fa-users"></i>Participants: 
+                          <ul ng-repeat = "participant in session.participants"><li>{{participant}}</li></ul></li>
+                        {{participants}}
+                        {{users}}
                     </ul>
                     
                 </div>
