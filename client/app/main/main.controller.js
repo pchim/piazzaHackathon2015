@@ -1,14 +1,15 @@
 'use strict';
 
 angular.module('piazzahackApp')
-  .controller('MainCtrl', function ($scope, $http, socket) {
+  .controller('MainCtrl', function ($scope, Auth, $http, socket) {
     
     $scope.init = function(){
       $scope.courses = [];
-      $scope.user = [];
-      $scope.course='';
+      $scope.user = Auth.getCurrentUser();
+      $scope.currentCourse={};
+      console.log($scope.user);
 
-      $http.get('/api/courses')
+      $http.get('/api/courses/me', $scope.user._id)
         .success(function(data) {
           $scope.courses = data;
           socket.syncUpdates('course', $scope.courses);
@@ -27,6 +28,10 @@ angular.module('piazzahackApp')
       //Check user's org == course's org
     }
 
+    $scope.setCurrentCourse = function(course){
+      $scope.currentCourse = course;
+    }
+
     $scope.createCourse = function() {
       if($scope.newCourse !== '') { //check if courses already have that course
         $scope.newCourseData={ name: $scope.newCourse };//organization: $scope.user.orgaization
@@ -43,8 +48,10 @@ angular.module('piazzahackApp')
       }
     };
 
-    $scope.createSession = function(course){
-      $scope.participants = [$scope.user.name]
+    $scope.createSession = function(){
+      console.log(typeof($scope.c));
+      var c = JSON.parse($scope.c);
+      $scope.participants = [$scope.user.name];
       $scope.newSessionData={
         date: $scope.date,
         location: $scope.studyLocation,
@@ -52,10 +59,10 @@ angular.module('piazzahackApp')
         max_number_people: $scope.max_number_people,
         participants: $scope.participants
       }
-      course.sessions.push(newSessionData);
-      $http.put('/api/courses', course.sessions)
+      // $scope.c.sessions.push(newSessionData);
+      $http.post('/api/courses/' + c._id + '/sessions', $scope.newSessionData)
         .success(function(data){
-          console.log("sessions", course.sessions);
+          // console.log("sessions", $scope.c.sessions);
         })
         .error(function(data){
           console.log('Error: ' + data);
@@ -64,6 +71,7 @@ angular.module('piazzahackApp')
     }
 
     $scope.updateSession = function(session){
+      console.log("ok");
       $scope.updateSessionData={
         date: session.date,
         location: session.studyLocation,

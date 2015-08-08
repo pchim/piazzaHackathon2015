@@ -44,9 +44,10 @@
 
                 <div class="input-group">
                     <span class="input-group-addon" id="basic-addon1"><i class="fa fa-university"></i></span>
-                    <select class="form-control" >
-                        <option value="course" ng-repeat="course in courses">{{course.name}}</option>
+                    <select class="form-control" ng-model= "c" >
+                        <option value="{{course}}" ng-repeat="course in courses">{{course.name}}</option>
                     </select>
+
                 </div>
 
                 <br>
@@ -65,7 +66,7 @@
 
                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="#People">
+                            <input type="text" class="form-control" placeholder="#People" ng-model="max_number_people">
                         </div>
                     </div>
                 </div>
@@ -74,7 +75,7 @@
 
                 <div class="input-group">
                     <span class="input-group-addon" id="basic-addon1"><i class="fa fa-location-arrow"></i></span>
-                    <input type="text" class="form-control" placeholder="Location" aria-describedby="basic-addon1">
+                    <input type="text" class="form-control" placeholder="Location" aria-describedby="basic-addon1" ng-model="studyLocation">
                 </div>
 
                 <br>
@@ -83,14 +84,14 @@
                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                         <div class="input-group">
                             <span class="input-group-addon" id="basic-addon1"><i class="fa fa-calendar"></i></span>
-                            <input type="text" class="form-control" placeholder="Date" aria-describedby="basic-addon1">
+                            <input type="text" class="form-control" placeholder="Date" aria-describedby="basic-addon1" ng-model="date">
                         </div><!-- /input-group -->
                     </div><!-- /.col-lg-6 -->
 
                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                         <div class="input-group">
                             <span class="input-group-addon" id="basic-addon1"><i class="fa fa-clock-o"></i></span>
-                            <input type="text" class="form-control" placeholder="Time" aria-describedby="basic-addon1">
+                            <input type="text" class="form-control" placeholder="Time" aria-describedby="basic-addon1" ng-model="time">
                         </div><!-- /input-group -->
                     </div><!-- /.col-lg-6 -->
                 </div><!-- /.row -->
@@ -114,7 +115,7 @@
           </li>
       </ul>
       <ul class="list-group" ng-repeat="course in courses">
-          <li class="list-group-item"><a href="#">#{{course.name}}</a></li>
+          <li class="list-group-item"><a ng-click="setCurrentCourse(course)">#{{course.name}}</a></li>
       </ul>
     </div>
     
@@ -128,16 +129,18 @@
         <div class="tab-content">
             <div id="home" class="tab-pane fade in active">
                 <br>
-                <div class="panel panel-default">
+                <div class="panel panel-default" ng-repeat="session in currentCourse.sessions">
                     <!-- Default panel contents -->
-                    <div class="panel-heading">#STUDY<span class="pull-right"><a href="#">join </a>/<a href="#"> edit</a></span></div>
+                    <div class="panel-heading">#{{}}<span class="pull-right"><a href="#">join </a>/<button type="button" class="btn btn-link"> edit</button></span></div>
 
                     <!-- List group -->
                     <ul class="list-group">
-                        <li class="list-group-item"><i class="fa fa-location-arrow"></i> Location</li>
-                        <li class="list-group-item"><i class="fa fa-calendar"></i> Date</li>
-                        <li class="list-group-item"><i class="fa fa-clock-o"></i> Time</li>
+                        <li class="list-group-item"><i class="fa fa-location-arrow"></i> Location: {{session.location}}</li>
+                        <li class="list-group-item"><i class="fa fa-calendar"></i> Date: {{session.date}}</li>
+                        <li class="list-group-item"><i class="fa fa-clock-o"></i> Time: {{session.time}}</li>
+                        <li class="list-group-item"><i class="fa fa-users"></i>Participants: {{session.participants}}</li>
                     </ul>
+                    
                 </div>
             </div>
 
@@ -145,7 +148,7 @@
                 <br>
                 <div class="panel panel-default">
                     <!-- Default panel contents -->
-                    <div class="panel-heading">#STUDY<span class="pull-right"><a href="#">join </a>/<a href="#"> edit</a></span></div>
+                    <div class="panel-heading">#Notes<span class="pull-right"><a href="#">join </a>/<button type="button" class="btn btn-link"> edit</button></span></div>
 
                     <!-- List group -->
                     <ul class="list-group">
@@ -160,7 +163,7 @@
                 <br>
                 <div class="panel panel-default">
                     <!-- Default panel contents -->
-                    <div class="panel-heading">#STUDY<span class="pull-right"><a href="#">join </a>/<a href="#"> edit</a></span></div>
+                    <div class="panel-heading">#Announcements<span class="pull-right"><a href="#">join </a>/<button type="button" class="btn btn-link"> edit</button></span></div>
 
                     <!-- List group -->
                     <ul class="list-group">
