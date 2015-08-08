@@ -4,6 +4,7 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
 var CourseSchema = new Schema({
+  organization: String,
   name: String,
   sessions: [{
     date: Date,
