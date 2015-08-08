@@ -69,7 +69,7 @@ exports.joinSession = function(req, res) {
       return s._id == req.body.session_id;
     });
     var idx = course.sessions.indexOf(session[0]);
-    course.sessions[idx].participants.push(req.body.user_id);
+    course.sessions[idx].participants.push(req.body.user_name);
     course.save(function(err) {
       if (err) { return handleError(res, err); }
       res.status(200).json(course);
