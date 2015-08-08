@@ -57,13 +57,13 @@
           
           
           
-        <div class="form-group" ng-class="{ 'has-success': form.school.$valid && submitted,
-                                            'has-error': form.school.$invalid && submitted }">
+        <div class="form-group" ng-class="{ 'has-success': form.organizatio .$valid && submitted,
+                                            'has-error': form.organization.$invalid && submitted }">
           <label>School</label>
 
-          <input type="text" name="school" class="form-control" ng-model="user.school"
+          <input type="text" name="school" class="form-control" ng-model="user.organization"
                  required/>
-          <p class="help-block" ng-show="form.school.$error.required && submitted">
+          <p class="help-block" ng-show="form.organization.$error.required && submitted">
             A school is required
           </p>
         </div>          

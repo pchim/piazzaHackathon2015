@@ -13,7 +13,7 @@ angular.module('piazzahackApp')
           name: $scope.user.name,
           email: $scope.user.email,
           password: $scope.user.password,
-          school: $scope.user.school
+          organization: $scope.user.organization
         })
         .then( function() {
           // Account created, redirect to home
