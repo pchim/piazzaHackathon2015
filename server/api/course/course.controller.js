@@ -2,10 +2,19 @@
 
 var _ = require('lodash');
 var Course = require('./course.model');
+var User = require('../user/user.model');
+
+// Get list of all courses
+exports.index = function(req, res) {
+  Course.find(function (err, courses) {
+    if(err) { return handleError(res, err); }
+    return res.status(200).json(courses);
+  });
+};
 
 // Get list of courses in organization
-exports.index = function(req, res) {
-  Course.find({organization: req.body.organization},function (err, courses) {
+exports.orgCourses = function(req, res) {
+  Course.find({organization: req.body.organization}, function (err, courses) {
     if(err) { return handleError(res, err); }
     return res.status(200).json(courses);
   });
@@ -13,7 +22,7 @@ exports.index = function(req, res) {
 
 // Get list of courses the user is in
 exports.userCourses = function(req, res) {
-  var userId = req.user._id;
+  var userId = req.body.user_id;
   User.findById(userId, function (err, user) {
     Course.find({_id: {$in: user.courses}}, function (err, courses) {
       if(err) { return handleError(res, err); }
@@ -24,8 +33,10 @@ exports.userCourses = function(req, res) {
 
 // join a course
 exports.join = function(req, res) {
-  var userId = req.user._id;
+  var userId = req.body.user_id;
+  console.log(userId);
   User.findById(userId, function (err, user) {
+    console.log(user);
     if(err) { return handleError(res, err); }
     user.courses.push(req.params.id);
     user.save(function(err) {
@@ -34,6 +45,36 @@ exports.join = function(req, res) {
     });
   });
 };
+
+// create a study session
+exports.createSession = function(req, res) {
+  Course.findById(req.params.id, function (err, course) {
+    if(err) { return handleError(res, err); }
+    if(!course) { return res.status(404).send('Not Found'); }
+    course.sessions.push(req.body);
+    course.save(function(err) {
+      if(err) { return handleError(res, err); }
+      res.status(200).json(course);
+    });
+  });
+};
+
+// join a study session
+exports.joinSession = function(req, res) {
+  Course.findById(req.params.id, function (err, course) {
+    if (err) { return handleError(res, err); }
+    if(!course) { return res.status(404).send('Not Found'); }
+    var session = course.sessions.filter(function(s) {
+      return s._id == req.body.session_id;
+    });
+    var idx = course.sessions.indexOf(session[0]);
+    course.sessions[idx].participants.push(req.body.user_id);
+    course.save(function(err) {
+      if (err) { return handleError(res, err); }
+      res.status(200).json(course);
+    });
+  });
+}
 
 // Get a single course
 exports.show = function(req, res) {

@@ -15,7 +15,8 @@ var CourseSchema = new Schema({
     comments: [{
       comment: String,
       author: String,
-      date: Date
+      date: Date,
+      last_modified: Date
     }]
   }],
   notes: [{
@@ -24,7 +25,8 @@ var CourseSchema = new Schema({
     comments: [{
       comment: String,
       author: String,
-      date: Date
+      date: Date,
+      last_modified: Date
     }]
   }]
 });
