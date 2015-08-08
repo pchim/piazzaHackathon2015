@@ -18,6 +18,6 @@ module.exports = {
     uri:    process.env.MONGOLAB_URI ||
             process.env.MONGOHQ_URL ||
             process.env.OPENSHIFT_MONGODB_DB_URL+process.env.OPENSHIFT_APP_NAME ||
-            'mongodb://localhost/piazzahack'
+            'mongodb://piazza-hack:piazza-hack@ds031223.mongolab.com:31223/piazza-hack'
   }
 };

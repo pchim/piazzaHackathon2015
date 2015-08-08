@@ -7,6 +7,7 @@
 
 var Thing = require('../api/thing/thing.model');
 var User = require('../api/user/user.model');
+var Course = require('../api/course/course.model');
 
 Thing.find({}).remove(function() {
   Thing.create({
@@ -35,15 +36,24 @@ User.find({}).remove(function() {
     provider: 'local',
     name: 'Test User',
     email: 'test@test.com',
-    password: 'test'
+    password: 'test',
+    organization: 'Stanford University'
   }, {
     provider: 'local',
     role: 'admin',
     name: 'Admin',
     email: 'admin@admin.com',
-    password: 'admin'
+    password: 'admin',
+    organization: 'Harvard University'
   }, function() {
       console.log('finished populating users');
     }
   );
 });
+
+Course.find({}).remove(function() {
+  Course.create({
+    organization: 'Stanford University',
+    name: 'CS 110: Principles of Computer Systems'
+  })
+})
