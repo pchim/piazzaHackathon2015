@@ -29,7 +29,7 @@ angular.module('piazzahackApp')
 
     $scope.createCourse = function() {
       if($scope.newCourse !== '') { //check if courses already have that course
-        $scope.newCourseData={ name: $scope.newCourse}; //organization: $scope.user.orgaization
+        $scope.newCourseData={ name: $scope.newCourse };//organization: $scope.user.orgaization
         $http.post('/api/courses', $scope.newCourseData)
         .success(function(data){
           $scope.newCourseData={};
@@ -44,24 +44,67 @@ angular.module('piazzahackApp')
     };
 
     $scope.createSession = function(index){
+      $scope.participants = [$scope.user.name]
       $scope.newSessionData={
         date: $scope.date,
         location: $scope.studyLocation,
         message: $scope.sessionName,
         max_number_people: $scope.max_number_people,
-        participants: [$scope.user.name]
+        participants: $scope.participants
       }
-      $http.post('/api/courses', $scope.newSessionData)
+      $scope.courses[index].sessions.push(newSessionData);
+      $http.put('/api/courses', $scope.courses[index].sessions)
         .success(function(data){
-          $scope.newSessionData={};
-          $scope.courses[index].sessions.push(data);
           console.log("sessions", $scope.courses[index].sessions);
         })
         .error(function(data){
           console.log('Error: ' + data);
         });
-        $scope.newSession= '';
+        $scope.newSessionData= {};
     }
+
+    $scope.updateSession = function(couseIndex, index){
+      $scope.updateSessionData={
+        date: $scope.date,
+        location: $scope.studyLocation,
+        message: $scope.sessionName,
+        max_number_people: $scope.max_number_people,
+        participants: $scope.participants,
+        comments: $scope.comments
+      }
+      $scope.courses[courseIndex].sessions[index] = $scope.updateSessionData;
+      $http.put('/api/courses', $scope.courses[courseIndex].sessions[index])
+        .success(function(data){
+          $scope.updateSessionData={};
+          console.log("sessions", $scope.courses[courseIndex].sessions[index]);
+        })
+        .error(function(data){
+          console.log('Error: ' + data);
+      });
+    }
+
+    $scope.addComment = function(courseIndex, index){
+      $scope.newComment={
+        comment: $scope.commentMessage,
+        author: $scope.user.name,
+        date: Date.now()
+      }
+      $scope.courses[courseIndex].sessions[index].comments.push($scope.newComment);
+    }
+
+
+    $scope.deleteSession = function(courseIndex, index){
+      $scope.courses[courseIndex].sessions.splice(index,1);
+      $http.put('/api/courses', $scope.courses[index].sessions)
+        .success(function(data){
+          console.log("sessions", $scope.courses[index].sessions);
+        })
+        .error(function(data){
+          console.log('Error: ' + data);
+        });
+    }
+
+
 
 
     $scope.deleteCourse = function(course) {
