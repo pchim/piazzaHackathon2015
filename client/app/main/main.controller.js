@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('piazzahackApp')
-  .controller('MainCtrl', function ($scope, Auth, $http, socket) {
+  .controller('MainCtrl', function ($scope, Auth, $http, socket, $location) {
     
     $scope.init = function(){
       $scope.courses = [];
@@ -201,15 +201,18 @@ angular.module('piazzahackApp')
     };
     
     
-    $scope.logOut = function(){
-      console.log(typeof($scope.c));
+    // $scope.logOut = function(){
+    //   console.log(typeof($scope.c));
       
-        $scope.user = [];
-        // Logout, redirect to home
+    //     $scope.user = [];
+    //     // Logout, redirect to home
         
-      }
+    //   }
     
-    
+    $scope.logout = function() {
+      Auth.logout();
+      $location.path('/login');
+    };
     
 
     $scope.$on('$destroy', function () {
