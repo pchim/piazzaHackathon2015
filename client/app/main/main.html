@@ -22,8 +22,24 @@
                 <button type="submit" class="btn btn-default">Submit</button>
             </form>
             
+            
+           
+            
+            
             <div class="nav navbar-nav navbar-right">
                 <button type="button" class="btn btn-default btn-lg" data-toggle="modal" data-target="#myModal">Post <i class="fa fa-plus"></i></button>
+                
+            <div class="btn-group">
+            <button type="button" data-toggle="dropdown" class="btn btn-default dropdown-toggle"> {{ user.name }} <span class="caret"></span></button>
+            <ul class="dropdown-menu">
+                <li><a href="#"> {{ user.email }} </a></li>
+                <li><a href="#"> {{ user.organization }}</a></li>
+                <li><a href="#"> Settings </a></li>
+                <li class="divider"></li>
+                <li><a href="/login">Logout/Change User</a></li>
+            </ul>
+        </div>
+                
             </div>
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
