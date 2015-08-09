@@ -9,6 +9,7 @@ angular.module('piazzahackApp')
       $scope.currentCourse={};
       $scope.allUsers = [];
       $scope.users = [];
+      $scope.currentSession = {};
       console.log($scope.user);
 
       $http.get('/api/courses/me', {user_id: $scope.user._id})
@@ -35,6 +36,10 @@ angular.module('piazzahackApp')
       $scope.currentCourse = course;
     }
 
+    $scope.setCurrentSession = function(session){
+      $scope.currestSession = session;
+      console.log("currentSession",session);
+    }
     
     $scope.getAllUsers = function(){
       $http.get('/api/users')
@@ -94,8 +99,8 @@ angular.module('piazzahackApp')
         participants: session.participants,
         comments: session.comments
       }
-      // session.sessions[index] = $scope.updateSessionData;
-      $http.put('/api/courses/' + $scope.currentCourse._id + 'sessions', $scope.updateSessionData)
+      console.log(":(", $scope.updateSessionData);
+      $http.put('/api/courses/' + $scope.currentCourse._id + '/sessions', $scope.updateSessionData)
         .success(function(data){
           $scope.updateSessionData={};
           console.log("sessions", session);
