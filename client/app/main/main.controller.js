@@ -10,6 +10,8 @@ angular.module('piazzahackApp')
       $scope.allUsers = [];
       $scope.users = [];
       $scope.currentSession = {};
+      $scope.mapOpen = false;
+      $scope.taskType = '';
       console.log($scope.user);
 
       $http.get('/api/courses/me', {user_id: $scope.user._id})
@@ -68,8 +70,12 @@ angular.module('piazzahackApp')
     };
 
     $scope.createSession = function(){
-      console.log(typeof($scope.c));
       var c = JSON.parse($scope.c);
+      if ($scope.taskType=="Notes"){
+        console.log("this is a note");
+        $scope.addNote(c);
+      }
+      else{
       $scope.participants = [$scope.user.name];
       $scope.newSessionData={
         date: $scope.date,
@@ -87,6 +93,7 @@ angular.module('piazzahackApp')
           console.log('Error: ' + data);
         });
         $scope.newSessionData= {};
+      }
     }
 
     $scope.updateSession = function(session){
@@ -146,7 +153,7 @@ angular.module('piazzahackApp')
         message: $scope.message
       }
       course.notes.push(newNote);
-      $http.put('/api/courses/' + course._id +'/notes/', course.notes)
+      $http.put('/api/courses/' + course._id +'/notes/', newNote)
         .success(function(data){
           console.log("notes", course.notes);
         })
