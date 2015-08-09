@@ -95,7 +95,7 @@ angular.module('piazzahackApp')
         comments: session.comments
       }
       // session.sessions[index] = $scope.updateSessionData;
-      $http.put('/api/courses', session)
+      $http.put('/api/courses/' + $scope.currentCourse._id + 'sessions', $scope.updateSessionData)
         .success(function(data){
           $scope.updateSessionData={};
           console.log("sessions", session);
@@ -126,7 +126,7 @@ angular.module('piazzahackApp')
 
     $scope.addParticipant = function(session){
       // session.participants.push($scope.user.name); //will not work with people with same name...?
-      $http.post('/api/courses/' + $scope.currentCourse._id +'/sessions/join', {session_id: session._id, user_id: $scope.user._id})
+      $http.post('/api/courses/' + $scope.currentCourse._id +'/sessions/join', {session_id: session._id, user_name: $scope.user.name})
         .success(function(data){
           console.log("participants", session.participants);
         })

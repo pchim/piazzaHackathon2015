@@ -75,6 +75,22 @@ exports.joinSession = function(req, res) {
       res.status(200).json(course);
     });
   });
+};
+
+exports.editSession = function(req, res) {
+  Course.findById(req.params.id, function (err, course) {
+    if (err) { return handleError(res, err); }
+    if(!course) { return res.status(404).send('Not Found'); }
+    var session = course.sessions.filter(function(s) {
+      return s._id == req.body.session_id;
+    });
+    var idx = course.sessions.indexOf(session[0]);
+    course.sessions[idx] = req.body;
+    course.save(function(err) {
+      if (err) { return handleError(res, err); }
+      res.status(200).json(course);
+    });
+  });
 }
 
 // Get a single course
