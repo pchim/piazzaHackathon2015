@@ -207,7 +207,7 @@
                 <div class="panel panel-default" ng-repeat="session in currentCourse.sessions">
                     <!-- Default panel contents -->
                     
-                    <div class="panel-heading">Looking for {{session.participants.length}}/{{session.max_number_people}} people<span class="pull-right"><a ng-click="addParticipant(session)" href="#"><i class="fa fa-2x fa-users"></i></a><a href="#" data-toggle="modal" data-target="#editModal"><i class="fa fa-2x fa-pencil-square-o"></i></a></span></div>
+                    <div class="panel-heading">Looking for {{session.max_number_people - session.participants.length}} <span ng-hide="(session.max_number_people-session.participants.length)==1">people</span> <span ng-show="(session.max_number_people-session.participants.length)==1">person</span> <span class="pull-right"><a ng-hide="(session.max_number_people-session.participants.length)==0" ng-click="addParticipant(session)" href="#"><i class="fa fa-2x fa-users"></i></a><a ng-hide="user.name!==session.participants[0]"href="#" data-toggle="modal" data-target="#editModal"><i class="fa fa-2x fa-pencil-square-o"></i></a></span></div>
 
                     <!-- List group -->
                     <ul class="list-group">
@@ -215,8 +215,6 @@
                         <li class="list-group-item"><i class="fa fa-calendar"></i> Date: {{session.date | date:'short'}}</li>
                         <li class="list-group-item"><i class="fa fa-users"></i>Participants: 
                           <ul ng-repeat = "participant in session.participants"><li>{{participant}}</li></ul></li>
-                        {{participants}}
-                        {{users}}
                     </ul>
                     
                 </div>
@@ -232,7 +230,6 @@
                     <ul class="list-group">
                         <li class="list-group-item"><i class="fa fa-location-arrow"></i> Location</li>
                         <li class="list-group-item"><i class="fa fa-calendar"></i> Date</li>
-                        <li class="list-group-item"><i class="fa fa-clock-o"></i> Time</li>
                     </ul>
                 </div>
             </div>
@@ -247,7 +244,6 @@
                     <ul class="list-group">
                         <li class="list-group-item"><i class="fa fa-location-arrow"></i> Location</li>
                         <li class="list-group-item"><i class="fa fa-calendar"></i> Date</li>
-                        <li class="list-group-item"><i class="fa fa-clock-o"></i> Time</li>
                     </ul>
                 </div>
             </div>
