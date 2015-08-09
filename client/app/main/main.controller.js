@@ -95,7 +95,7 @@ angular.module('piazzahackApp')
         comments: session.comments
       }
       // session.sessions[index] = $scope.updateSessionData;
-      $http.put('/api/courses', session)
+      $http.put('/api/courses/' + $scope.currentCourse._id + 'sessions', $scope.updateSessionData)
         .success(function(data){
           $scope.updateSessionData={};
           console.log("sessions", session);
