@@ -14,7 +14,7 @@ angular.module('piazzahackApp')
       $scope.taskType = '';
       console.log($scope.user);
 
-      $http.get('/api/courses/me', {user_id: $scope.user._id})
+      $http.get('/api/courses')
         .success(function(data) {
           $scope.courses = data;
           socket.syncUpdates('course', $scope.courses);
