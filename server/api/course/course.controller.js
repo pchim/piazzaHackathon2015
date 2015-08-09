@@ -46,6 +46,20 @@ exports.join = function(req, res) {
   });
 };
 
+// create a note for a class
+exports.createNote = function(req, res) {
+  Course.findById(req.params.id, function (err, course) {
+    if(err) { return handleError(res, err); }
+    if(!course) { return res.status(404).send('Not Found'); }
+    req.body.date = new Date(req.body.date);
+    course.notes.push(req.body);
+    course.save(function(err) {
+      if(err) { return handleError(res, err); }
+      res.status(200).json(course);
+    });
+  });
+};
+
 // create a study session
 exports.createSession = function(req, res) {
   Course.findById(req.params.id, function (err, course) {

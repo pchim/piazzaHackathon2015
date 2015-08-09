@@ -15,6 +15,7 @@ router.post('/', controller.create);
 router.post('/:id/sessions', controller.createSession);
 router.post('/:id/sessions/join', controller.joinSession);
 router.put('/:id/sessions', controller.editSession);
+router.post('/:id/notes', controller.createNote);
 router.put('/:id', controller.update);
 router.patch('/:id', controller.update);
 router.delete('/:id', controller.destroy);
