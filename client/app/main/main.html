@@ -227,7 +227,12 @@
 
                     <!-- List group -->
                     <ul class="list-group">
-                        <li class="list-group-item"><i class="fa fa-location-arrow"></i> Location: {{session.location}}</li>
+                        <li class="list-group-item"><i class="fa fa-location-arrow"></i> Location: {{session.location}}
+                        <!-- <iframe width="300" height="250" frameborder="0" style="border:0" ng-src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBfHKqynzNrUgtayIrtdQ5s05jvpEd0y3k&q=Seattle" allowfullscreen>
+                        </iframe> -->
+                        <img src="https://maps.googleapis.com/maps/api/staticmap?center={{session.location}}&zoom=13&size=400x200&maptype=roadmap">
+
+                        </li>
                         <li class="list-group-item"><i class="fa fa-calendar"></i> Date: {{session.date | date:'short'}}</li>
                         <li class="list-group-item"><i class="fa fa-users"></i>Participants: 
                           <ul ng-repeat = "participant in session.participants"><li>{{participant}}</li></ul></li>
