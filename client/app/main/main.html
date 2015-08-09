@@ -11,16 +11,17 @@
                 <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand" href="#">Study-Date</a>
+<!--             <span class="pull-center" id="school">{{user.organization}}</span> -->
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <form class="navbar-form navbar-left" role="search">
+<!--             <form class="navbar-form navbar-left" role="search">
                 <div class="form-group">
                     <input type="text" class="form-control" placeholder="Search">
                 </div>
                 <button type="submit" class="btn btn-default">Submit</button>
-            </form>
+            </form> -->
             
             
            
@@ -36,7 +37,7 @@
                 <li><a href="#"> {{ user.organization }}</a></li>
                 <li><a href="#"> Settings </a></li>
                 <li class="divider"></li>
-                <li><a href="/login">Logout/Change User</a></li>
+                <li><a href ng-click="logout()">Logout</a></li>
             </ul>
         </div>
                 
@@ -53,7 +54,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><i class="fa fa-times"></i></button>
-                <h4 class="modal-title">Post New Study Session</h4>
+                <h4 class="modal-title">Post New {{type}}</h4>
             </div>
 
             <div class="modal-body">
@@ -72,15 +73,14 @@
                     <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
                         <div class="input-group">
                             <span class="input-group-addon" id="basic-addon1"><i class="fa fa-users"></i></span>
-                            <select class="form-control">
-                                <option value="one">Study Session</option>
-                                <option value="two">Notes</option>
-                                <option value="three">Announcements</option>
+                            <select class="form-control" ng-model="type" ng-init="type='Study Session'">
+                                <option value="Study Session" selected>Study Session</option>
+                                <option value="Notes">Notes</option>
+                                <option value="Announcements">Announcements</option>
                             </select>
                         </div>
                     </div>
-
-                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4" ng-show="type=='Study Session'">
                         <div class="input-group">
                             <input type="text" class="form-control" placeholder="#People" ng-model="max_number_people">
                         </div>
@@ -89,14 +89,19 @@
 
                 <br>
 
-                <div class="input-group">
+                <div class="input-group" ng-show="type=='Study Session'">
                     <span class="input-group-addon" id="basic-addon1"><i class="fa fa-location-arrow"></i></span>
                     <input type="text" class="form-control" placeholder="Location" aria-describedby="basic-addon1" ng-model="studyLocation">
                 </div>
 
+                <div class="input-group" ng-hide="type=='Study Session'">
+                    <span class="input-group-addon" id="basic-addon1"><i class="fa fa-pencil"></i></span>
+                    <textarea class="form-control" rows="5" id="comment"></textarea>
+                </div>
+
                 <br>
 
-                <div class="row">
+                <div class="row" ng-show="type=='Study Session'">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <div class="input-group">
                             <span class="input-group-addon" id="basic-addon1"><i class="fa fa-calendar"></i></span>
@@ -125,39 +130,19 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal"><i class="fa fa-times"></i></button>
-                        <h4 class="modal-title">Post New Study Session</h4>
+                        <h4 class="modal-title">Edit Current Session</h4>
+                        {{currentCourse.session}}
                     </div>
                     
                     <div class="modal-body">
-                        
-                        <div class="input-group">
-                            <span class="input-group-addon" id="basic-addon1"><i class="fa fa-university"></i></span>
-                            <select class="form-control">
-                                <option value="one">CS101</option>
-                                <option value="two">CS102</option>
-                                <option value="three">CS103</option>
-                                <option value="four">CS104</option>
-                                <option value="five">CS105</option>
-                            </select>
-                        </div>
 
                         <br>
                         
                             <div class="row">
-                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                     <div class="input-group">
                                         <span class="input-group-addon" id="basic-addon1"><i class="fa fa-users"></i></span>
-                                        <select class="form-control">
-                                            <option value="one">Study Session</option>
-                                            <option value="two">Notes</option>
-                                            <option value="three">Announcements</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                
-                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" placeholder="#People">
+                                        <input type="text" class="form-control" placeholder="#People" ng-model="currentSession.max_number_people" ng-init="currentSession.max_number_people">
                                     </div>
                                 </div>
                             </div>
@@ -166,45 +151,40 @@
 
                         <div class="input-group">
                             <span class="input-group-addon" id="basic-addon1"><i class="fa fa-location-arrow"></i></span>
-                            <input type="text" class="form-control" placeholder="Location" aria-describedby="basic-addon1">
+                            <input type="text" class="form-control" placeholder="Location" aria-describedby="basic-addon1" ng-model="currentSession.location">
                         </div>
 
                         <br>
                         
                         <div class="row">
-                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                 <div class="input-group">
                                     <span class="input-group-addon" id="basic-addon1"><i class="fa fa-calendar"></i></span>
-                                    <input type="text" class="form-control" placeholder="Date" aria-describedby="basic-addon1">
+                                    <input type="text" class="form-control" placeholder="Date" aria-describedby="basic-addon1" ng-model="currentSession.date">
                                 </div><!-- /input-group -->
                             </div><!-- /.col-lg-6 -->
-
-                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                                <div class="input-group">
-                                    <span class="input-group-addon" id="basic-addon1"><i class="fa fa-clock-o"></i></span>
-                                    <input type="text" class="form-control" placeholder="Time" aria-describedby="basic-addon1">
-                                </div><!-- /input-group -->
-                            </div><!-- /.col-lg-6 -->
+                            
                         </div><!-- /.row -->
                     
                     </div>
                     
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Submit</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="updateSession(currentSession)">Submit</button>
                     </div>
                 </div>
 
             </div>
         </div>
-
 <div class="row">
     <div class="col-lg-3 col-md-3 col-sm-3 hash-categories">
       <ul class="list-group">
           <li class="list-group-item">
-              <input type="text" placeholder="#" class="form-control" ng-model="newCourse"><br>
+              <input type="text" placeholder="#" class="form-control" id="newCourse" ng-model="newCourse">
               <button class="btn btn-default" ng-click="createCourse()">Add Class</button>
           </li>
       </ul>
+
+
       <ul class="list-group" ng-repeat="course in courses">
           <li class="list-group-item"><a ng-click="setCurrentCourse(course)">#{{course.name | uppercase}}</a></li>
       </ul>
@@ -223,7 +203,7 @@
                 <div class="panel panel-default" ng-repeat="session in currentCourse.sessions">
                     <!-- Default panel contents -->
                     
-                    <div class="panel-heading">Looking for {{session.max_number_people - session.participants.length}} <span ng-hide="(session.max_number_people-session.participants.length)==1">people</span> <span ng-show="(session.max_number_people-session.participants.length)==1">person</span> <span class="pull-right"><a ng-hide="(session.max_number_people-session.participants.length)==0" ng-click="addParticipant(session)" href="#"><i class="fa fa-2x fa-users"></i></a><a ng-hide="user.name!==session.participants[0]"href="#" data-toggle="modal" data-target="#editModal"><i class="fa fa-2x fa-pencil-square-o"></i></a></span></div>
+                    <div class="panel-heading">{{session.participants[0] }} is looking for {{session.max_number_people - session.participants.length}} <span ng-hide="(session.max_number_people-session.participants.length)==1">people</span> <span ng-show="(session.max_number_people-session.participants.length)==1">person</span> <span class="pull-right"><a ng-hide="(session.max_number_people-session.participants.length)==0" ng-click="addParticipant(session)" href="#"><i class="fa fa-2x fa-users"></i></a><a ng-hide="user.name!==session.participants[0]"href="#" data-toggle="modal" data-target="#editModal" ng-click="setCurrentSession(session)"><i class="fa fa-2x fa-pencil-square-o"></i></a></span></div>
 
                     <!-- List group -->
                     <ul class="list-group">
@@ -245,7 +225,7 @@
                 <br>
                 <div class="panel panel-default">
                     <!-- Default panel contents -->
-                    <div class="panel-heading">#Notes<span class="pull-right"><a href="#">join </a>/<button type="button" class="btn btn-link">edit</button></span></div>
+                    <div class="panel-heading">#Notes<span class="pull-right"><a href="#" data-toggle="modal" data-target="#editModal" ng-click="setCurrentSession(session)"><i class="fa fa-2x fa-pencil-square-o"></i></a></span></div>
 
                     <!-- List group -->
                     <ul class="list-group">

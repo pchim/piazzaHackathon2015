@@ -36,3 +36,10 @@
 .panel .fa.fa-2x {
     padding: 0 10px;
 }
+#newCourse{
+    width: 150px;
+    display: inline-block;
+
+#school{
+    display:inline-block;
+}
