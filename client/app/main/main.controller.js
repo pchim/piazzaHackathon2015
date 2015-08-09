@@ -194,6 +194,18 @@ angular.module('piazzahackApp')
         console.log('Error: ' + data);
       });
     };
+    
+    
+    $scope.logOut = function(){
+      console.log(typeof($scope.c));
+      
+        $scope.user = [];
+        // Logout, redirect to home
+        
+      }
+    
+    
+    
 
     $scope.$on('$destroy', function () {
       socket.unsyncUpdates('course');
